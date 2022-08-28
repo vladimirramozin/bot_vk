@@ -47,7 +47,7 @@ if __name__ == '__main__':
             request = event.text.lower()
             attachmets = []
             if request == 'привет' or request == 'начать':
-                select = '"главная"'
+                select = '\'главная\''
                 preparing_images_for_sending(select, vk, connection_bd, upload,
                                              event.user_id, 'start')
             elif request == 'пока':
@@ -56,9 +56,13 @@ if __name__ == '__main__':
                 write_msg(event.user_id, 'Чтобы вы хотели попробовать?',
                           vk, keyboard='keyboard_for_shop')
             elif request == 'маффины':
-                write_msg(event.user_id, 'У нас их много какой будешь?', vk)
+                write_msg(
+                    event.user_id,
+                    'У нас их много, какой будешь? Cейчас все покажу!',
+                    vk
+                )
                 time.sleep(1.1)
-                select = '"маффин"'
+                select = '\'маффин\''
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -69,11 +73,11 @@ if __name__ == '__main__':
             elif request == 'торты':
                 write_msg(
                     event.user_id,
-                    'У нас их много какой будешь? сейчас все покажу!',
+                    'У нас их много, какой будешь? Cейчас все покажу!',
                     vk
                 )
                 time.sleep(1.1)
-                select = '"торт"'
+                select = '\'торт\''
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -83,9 +87,13 @@ if __name__ == '__main__':
                     'pay'
                 )
             elif request == 'пончики':
-                write_msg(event.user_id, 'У нас их много какой будешь?', vk)
+                write_msg(
+                    event.user_id,
+                    'У нас их много, какой будешь? Cейчас все покажу!?',
+                     vk
+                 )
                 time.sleep(1.1)
-                select = '"пончик"'
+                select = '\'пончик\''
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -96,7 +104,7 @@ if __name__ == '__main__':
                 )
             elif request == 'о нашей команде':
                 time.sleep(1.1)
-                select = '"команда"'
+                select = '\'команда\''
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -116,8 +124,7 @@ if __name__ == '__main__':
                 write_msg(
                     event.user_id,
                     'к сожалению у нас пока нет аккаунта для платежей',
-                    vk,
-                    keyboard='keyboard_for_shop'
+                    vk
                 )
             else:
                 write_msg(
