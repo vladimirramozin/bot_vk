@@ -1,0 +1,9 @@
+create_shop_table = """
+CREATE TABLE IF NOT EXISTS shop (
+  id SERIAL PRIMARY KEY, 
+  category TEXT NOT NULL, 
+  products TEXT NOT NULL,
+  photo TEXT NOT NULL
+)
+"""
+execute_query(con, create_shop_table)
