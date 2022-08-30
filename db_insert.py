@@ -36,7 +36,6 @@ shops = [
 
 
 shop_records = ', '.join(['%s'] * len(shops))
-
 insert_query = (
     f'INSERT INTO shop (category, products, photo) VALUES {shop_records}'
 )

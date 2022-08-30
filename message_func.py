@@ -45,12 +45,12 @@ handler.setFormatter(formatter)
 
 
 def execute_read_query(connection_bd, query):
-    '''
-    Функция посылает запрос в БД 
+    """
+    Функция посылает запрос в БД
     postgres принимает два аргумента:
     connection_bd, соединение к бд через psycopg2.connect,
     query, SQL запрос SELECT..
-    '''
+    """
     cursor = connection_bd.cursor()
     try:
         cursor.execute(query)
@@ -61,17 +61,17 @@ def execute_read_query(connection_bd, query):
 
 
 def preparing_images_for_sending(category, vk, con, upload, user_id, key=None):
-    '''
+    """
     Подготавливает представление изображения к виду
     необходимому для отправку в VK, принимает аргументы:
     category, категория по которой делается выборка в бд,
-    vk, подсоединение к чату в VK, 
+    vk, подсоединение к чату в VK,
     con, соединение с БД,
     upload, результат VkUpload(vk),
     user_id, идентификатор пользователя в VK,
     key, варианты клавиатур для ответов,
     после завершения работы передает данные в write_msg()
-    '''
+    """
     select_shop = (
         'SELECT products, photo FROM shop WHERE category = {}'.format(category)
     )
@@ -93,15 +93,15 @@ def preparing_images_for_sending(category, vk, con, upload, user_id, key=None):
 
 
 def write_msg(user_id, message, vk, attachment=None, keyboard=None):
-    '''
+    """
     Передает сообщение в VK, принимает аргументы:
     user_id, идентификатор пользователя в VK,
     message, строка сообщения,
     vk, подсоединение к чату в VK,
-    attachment, подготовленное в preparing_images_for_sending() 
+    attachment, подготовленное в preparing_images_for_sending()
     для отправки в ВК изобржение,
     key, варианты клавиатур для ответов
-    '''
+    """
     if keyboard == 'keyboard_for_shop':
         return vk.method(
             'messages.send', {
