@@ -1,8 +1,10 @@
 import os
-from dotenv import load_dotenv
+
 import psycopg2
+from dotenv import load_dotenv
 
 load_dotenv('.env')
+def 
 con = psycopg2.connect(
     database=os.environ.get('DB_NAME'),
     user=os.environ.get('POSTGRES_USER'),
@@ -12,18 +14,14 @@ con = psycopg2.connect(
 )
 
 
-
-
 def execute_query(connection, query):
     connection.autocommit = True
     cursor = connection.cursor()
     try:
         cursor.execute(query)
-        print("Query executed successfully")
-    except OperationalError as e:
-        print(f"The error '{e}' occurred")
-
-
+        print('Query executed successfully')
+    except psycopg2.OperationalError:
+        print('The error occurred')
 
 
 delete_shop_table = """

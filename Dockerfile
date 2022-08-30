@@ -10,6 +10,4 @@ COPY ./ /app
 
 WORKDIR /app
 
-#RUN python3 db_insert.py
-
 CMD ["python3", "my_bot.py"] 

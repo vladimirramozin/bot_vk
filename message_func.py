@@ -43,6 +43,20 @@ formatter = logging.Formatter(
 )
 handler.setFormatter(formatter)
 
+def connection_bd():
+    try:
+        connection_bd = psycopg2.connect(
+            database=os.environ.get('DB_NAME'),
+            user=os.environ.get('POSTGRES_USER'),
+            password=os.environ.get('POSTGRES_PASSWORD'),
+            host=os.environ.get('DB_HOST'),
+            port=os.environ.get('DB_PORT'),
+        )
+        logger.info('успешное подключение к бд')
+        return  connection_bd
+    
+    except OperationalError:
+        print('нет подключения к бд')
 
 def execute_read_query(connection_bd, query):
     '''
@@ -87,6 +101,7 @@ def preparing_images_for_sending(category, vk, con, upload, user_id, key=None):
                 )
             )
             write_msg(user_id, f'{photo[0]}', vk, attachmets, key)
+            con.close()
             logger.info('файл картинки успешно прочитан')
     except FileNotFoundError:
         logger.error('файл не найден')
