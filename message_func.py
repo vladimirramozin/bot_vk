@@ -1,6 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
-
+import psycopg2
+import os
 from psycopg2 import OperationalError
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.utils import get_random_id

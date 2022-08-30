@@ -36,7 +36,7 @@ if __name__ == '__main__':
             request = event.text.lower()
             attachmets = []
             if request == 'привет' or request == 'начать':
-                select = '\"главная\"'
+                select = '\'главная\''
                 connection_bd = connection_bd()
                 preparing_images_for_sending(select, vk, connection_bd, upload,
                                              event.user_id, 'start')
@@ -52,12 +52,12 @@ if __name__ == '__main__':
                     vk
                 )
                 time.sleep(1.1)
-                select = '\"маффин\"'
-                connection = connection_bd()
+                select = '\'маффин\''
+                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
-                    connection,
+                    connection_bd,
                     upload, event.user_id,
                     'pay'
                 )
@@ -68,12 +68,12 @@ if __name__ == '__main__':
                     vk
                 )
                 time.sleep(1.1)
-                select = '\"торт\"'
-                connection = connection_bd()
+                select = '\'торт\''
+                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
-                    connection,
+                    connection_bd,
                     upload,
                     event.user_id,
                     'pay'
@@ -85,24 +85,24 @@ if __name__ == '__main__':
                     vk
                  )
                 time.sleep(1.1)
-                select = '\"пончик\"'
-                connection = connection_bd()
+                select = '\'пончик\''
+                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
-                    connection,
+                    connection_bd,
                     upload,
                     event.user_id,
                     'pay'
                 )
             elif request == 'о нашей команде':
                 time.sleep(1.1)
-                select = '\"команда\"'
-                connection = connection_bd()
+                select = '\'команда\''
+                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
-                    connection,
+                    connection_bd,
                     upload,
                     event.user_id,
                     'team'

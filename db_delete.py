@@ -4,7 +4,7 @@ import psycopg2
 from dotenv import load_dotenv
 
 load_dotenv('.env')
-def 
+
 con = psycopg2.connect(
     database=os.environ.get('DB_NAME'),
     user=os.environ.get('POSTGRES_USER'),
@@ -28,3 +28,4 @@ delete_shop_table = """
 DELETE FROM shop
 """
 execute_query(con, delete_shop_table)
+con.close()
