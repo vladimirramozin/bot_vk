@@ -1,7 +1,6 @@
 import logging
 from logging.handlers import RotatingFileHandler
-import psycopg2
-import os
+
 from psycopg2 import OperationalError
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.utils import get_random_id
@@ -31,7 +30,7 @@ keyboard_for_shop_pay = VkKeyboard(inline=True)
 keyboard_for_shop_pay.add_button('оплатить', color=VkKeyboardColor.PRIMARY)
 keyboard_for_shop_pay.add_button('назад', color=VkKeyboardColor.PRIMARY)
 
-logger = logging.getLogger(__name__)
+Logger = logging.getLogger(__name__)
 handler = RotatingFileHandler(
     'my_bot_logger.log',
     maxBytes=500000,
@@ -44,20 +43,6 @@ formatter = logging.Formatter(
 )
 handler.setFormatter(formatter)
 
-def connection_bd():
-    try:
-        connection_bd = psycopg2.connect(
-            database=os.environ.get('DB_NAME'),
-            user=os.environ.get('POSTGRES_USER'),
-            password=os.environ.get('POSTGRES_PASSWORD'),
-            host=os.environ.get('DB_HOST'),
-            port=os.environ.get('DB_PORT'),
-        )
-        logger.info('успешное подключение к бд')
-        return  connection_bd
-    
-    except OperationalError:
-        print('нет подключения к бд')
 
 def execute_read_query(connection_bd, query):
     '''
@@ -102,7 +87,6 @@ def preparing_images_for_sending(category, vk, con, upload, user_id, key=None):
                 )
             )
             write_msg(user_id, f'{photo[0]}', vk, attachmets, key)
-            con.close()
             logger.info('файл картинки успешно прочитан')
     except FileNotFoundError:
         logger.error('файл не найден')

@@ -2,7 +2,6 @@ import logging
 import os
 import time
 from logging.handlers import RotatingFileHandler
-
 import psycopg2
 import vk_api
 from dotenv import load_dotenv
@@ -10,13 +9,14 @@ from psycopg2 import OperationalError
 from vk_api import VkUpload
 from vk_api.longpoll import VkEventType, VkLongPoll
 
-from message_func import connection_bd, preparing_images_for_sending, write_msg
+from message_func import preparing_images_for_sending, write_msg
 
 logger = logging.getLogger(__name__)
 handler = RotatingFileHandler('my_bot_logger.log',
                               maxBytes=500000, backupCount=5)
 logger.setLevel(logging.INFO)
 logger.addHandler(handler)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                     my_bot.py                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 formatter = logging.Formatter('%(asctime)s, %(filename)s,'
                               '%(levelname)s, %(message)s')
 handler.setFormatter(formatter)
@@ -27,6 +27,18 @@ vk = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk)
 upload = VkUpload(vk)
 
+try:
+    connection_bd = psycopg2.connect(
+        database=os.environ.get('DB_NAME'),
+        user=os.environ.get('POSTGRES_USER'),
+        password=os.environ.get('POSTGRES_PASSWORD'),
+        host=os.environ.get('DB_HOST'),
+        port=os.environ.get('DB_PORT'),
+    )
+
+    logger.info('успешное подключение к бд')
+except OperationalError:
+    print('нет подключения к бд')
 
 if __name__ == '__main__':
     print('Бот запущен')
@@ -36,8 +48,8 @@ if __name__ == '__main__':
             request = event.text.lower()
             attachmets = []
             if request == 'привет' or request == 'начать':
-                select = '\'главная\''
-                connection_bd = connection_bd()
+                select = '\"главная\"'
+
                 preparing_images_for_sending(select, vk, connection_bd, upload,
                                              event.user_id, 'start')
             elif request == 'пока':
@@ -53,7 +65,6 @@ if __name__ == '__main__':
                 )
                 time.sleep(1.1)
                 select = '\'маффин\''
-                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -69,7 +80,6 @@ if __name__ == '__main__':
                 )
                 time.sleep(1.1)
                 select = '\'торт\''
-                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -82,11 +92,10 @@ if __name__ == '__main__':
                 write_msg(
                     event.user_id,
                     'У нас их много, какой будешь? Cейчас все покажу!?',
-                    vk
+                     vk
                  )
                 time.sleep(1.1)
                 select = '\'пончик\''
-                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -98,7 +107,6 @@ if __name__ == '__main__':
             elif request == 'о нашей команде':
                 time.sleep(1.1)
                 select = '\'команда\''
-                connection_bd = connection_bd()
                 preparing_images_for_sending(
                     select,
                     vk,
@@ -126,3 +134,4 @@ if __name__ == '__main__':
                     'Не поняла вашего ответа...',
                     vk
                 )
+
