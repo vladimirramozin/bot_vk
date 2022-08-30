@@ -2,7 +2,6 @@ import logging
 import os
 import time
 from logging.handlers import RotatingFileHandler
-
 import psycopg2
 import vk_api
 from dotenv import load_dotenv
@@ -27,14 +26,16 @@ vk = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk)
 upload = VkUpload(vk)
 
+os.system('db_insert.py')
 try:
     connection_bd = psycopg2.connect(
         database=os.environ.get('DB_NAME'),
-        user=os.environ.get('DB_USER'),
-        password=os.environ.get('DB_PASSWORD'),
+        user=os.environ.get('POSTGRES_USER'),
+        password=os.environ.get('POSTGRES_PASSWORD'),
         host=os.environ.get('DB_HOST'),
         port=os.environ.get('DB_PORT'),
     )
+
     logger.info('успешное подключение к бд')
 except OperationalError:
     print('нет подключения к бд')
@@ -48,6 +49,7 @@ if __name__ == '__main__':
             attachmets = []
             if request == 'привет' or request == 'начать':
                 select = '\'главная\''
+
                 preparing_images_for_sending(select, vk, connection_bd, upload,
                                              event.user_id, 'start')
             elif request == 'пока':

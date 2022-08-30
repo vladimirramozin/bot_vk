@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # описание контейнера db
+  db:
+    # образ, из которого должен быть запущен контейнер
+    image: postgres:13.0-alpine
+    env_file:
+      - ./.env
+    # volume и связанная с ним директория в контейнере
+
+    # адрес файла, где хранятся переменные окружения
+  script:
+    build: ./
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+#    networks:
+#      - net
+
+#networks:
+# net:
+#  driver: bridge
