@@ -30,7 +30,7 @@ keyboard_for_shop_pay = VkKeyboard(inline=True)
 keyboard_for_shop_pay.add_button('оплатить', color=VkKeyboardColor.PRIMARY)
 keyboard_for_shop_pay.add_button('назад', color=VkKeyboardColor.PRIMARY)
 
-Logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 handler = RotatingFileHandler(
     'my_bot_logger.log',
     maxBytes=500000,

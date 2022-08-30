@@ -16,7 +16,6 @@ handler = RotatingFileHandler('my_bot_logger.log',
                               maxBytes=500000, backupCount=5)
 logger.setLevel(logging.INFO)
 logger.addHandler(handler)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                     my_bot.py                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 formatter = logging.Formatter('%(asctime)s, %(filename)s,'
                               '%(levelname)s, %(message)s')
 handler.setFormatter(formatter)
@@ -48,7 +47,7 @@ if __name__ == '__main__':
             request = event.text.lower()
             attachmets = []
             if request == 'привет' or request == 'начать':
-                select = '\"главная\"'
+                select = '\'главная\''
 
                 preparing_images_for_sending(select, vk, connection_bd, upload,
                                              event.user_id, 'start')
