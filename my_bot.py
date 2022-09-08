@@ -2,6 +2,7 @@ import logging
 import os
 import time
 from logging.handlers import RotatingFileHandler
+
 import psycopg2
 import vk_api
 from dotenv import load_dotenv
@@ -91,7 +92,7 @@ if __name__ == '__main__':
                 write_msg(
                     event.user_id,
                     'У нас их много, какой будешь? Cейчас все покажу!?',
-                     vk
+                    vk
                  )
                 time.sleep(1.1)
                 select = '\'пончик\''
@@ -133,4 +134,3 @@ if __name__ == '__main__':
                     'Не поняла вашего ответа...',
                     vk
                 )
-

@@ -5,46 +5,17 @@
 
 ## Основные возможности:
 ```
-Бот начинает работу 
+Бот начинает работу после приветствия "привет" или "начать" в любом регистре. Запущен в двух докер контейнерах (постгрес и сам бот). 
+Работает на яндекс диске. Реализовано логирование. Тесты написаны для локальной реализации. С ним можно пообщаться в ВК: 
+https://vk.com/club215478360
 ```
-## Как запустить проект:
-
-Клонировать репозиторий и перейти в него в командной строке:
-```
-git clone https://github.com/vladimirramozin/api_final_yatube.git
-cd api_final_yatube
-```
-Cоздать и активировать виртуальное окружение:
-```
-python3 -m venv env
-source .venv/bin/activate
-```
-Установить зависимости из файла requirements.txt:
-```
-python3 -m pip install --upgrade pip
-pip install -r requirements.txt
-```
-Выполнить миграции:
-```
-python3 manage.py migrate
-```
-Запустить проект:
-```
-python3 manage.py runserver
-```
-### Пример запроса:
-{
-"text": "sterwsfdrifddxvcng"
-}
 
 ## Системные требования:
-Python 3.7,
-Django==2.2.16,
-pytest==6.2.4,
-pytest-pythonpath==0.7.3,
-pytest-django==4.4.0,
-djangorestframework==3.12.4,
-djangorestframework-simplejwt==4.7.2,
-Pillow==8.3.1,
-PyJWT==2.1.0,
-requests==2.26.0
+certifi==2022.6.15
+charset-normalizer==2.1.1
+idna==3.3
+psycopg2-binary==2.9.3
+python-dotenv==0.20.0
+requests==2.28.1
+urllib3==1.26.12
+vk-api==11.9.9

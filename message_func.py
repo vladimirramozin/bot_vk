@@ -103,6 +103,7 @@ def write_msg(user_id, message, vk, attachment=None, keyboard=None):
     для отправки в ВК изобржение,
     key, варианты клавиатур для ответов
     """
+
     if not attachment is None:
         attacchment = ','.join(attachment)
     return vk.method(
@@ -114,6 +115,4 @@ def write_msg(user_id, message, vk, attachment=None, keyboard=None):
             'keyboard': keyboard_arg.get(keyboard, None)
             }
         )
-
-
 
