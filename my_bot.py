@@ -45,6 +45,11 @@ change_func = {
          'message': 'пока',
          'attachment': None,
          'keyboard': None},
+    'оплатить':
+        {'func': write_msg,
+         'message': 'к сожалению у нас пока нет платежного аккаунта(',
+         'attachment': None,
+         'keyboard': None},
     'магазин':
         {'func': write_msg, 'message': 'Чтобы вы хотели попробовать?',
          'attachment': None,
