@@ -40,6 +40,17 @@ try:
 except OperationalError:
     print('нет подключения к бд')
 
+change_func = {'пока': {'func': write_msg, 'message': 'пока', 'attachment': None, 'keyboard': None},
+               'магазин': {'func': write_msg, 'message': 'Чтобы вы хотели попробовать?', 'attachment': None, 'keyboard': 'keyboard_for_shop'},
+               'назад': {'func': write_msg, 'message': 'Чтобы вы хотели попробовать?', 'attachment': None, 'keyboard': 'keyboard_for_shop'},
+               'привет': {'func': preparing_images_for_sending, 'category': '\'главная\'', 'key':'start'},
+               'начать': {'func': preparing_images_for_sending, 'category': '\'главная\'', 'key':'start'}, 
+               'пончики': {'func': preparing_images_for_sending, 'category': '\'пончик\'', 'key':'pay'},
+               'маффины': {'func': preparing_images_for_sending, 'category': '\'маффин\'', 'key':'pay'},
+               'торты': {'func': preparing_images_for_sending, 'category': '\'торт\'', 'key':'pay'},
+               'о нашей команде': {'func': preparing_images_for_sending, 'category': '\'команда\'', 'key':'team'}
+               }
+
 if __name__ == '__main__':
     print('Бот запущен')
     for event in longpoll.listen():
@@ -47,90 +58,26 @@ if __name__ == '__main__':
                 and event.to_me and event.text):
             request = event.text.lower()
             attachmets = []
-            if request == 'привет' or request == 'начать':
-                select = '\'главная\''
-
-                preparing_images_for_sending(select, vk, connection_bd, upload,
-                                             event.user_id, 'start')
-            elif request == 'пока':
-                write_msg(event.user_id, 'Пока((')
-            elif request == 'магазин':
-                write_msg(event.user_id, 'Чтобы вы хотели попробовать?',
-                          vk, keyboard='keyboard_for_shop')
-            elif request == 'маффины':
-                write_msg(
-                    event.user_id,
-                    'У нас их много, какой будешь? Cейчас все покажу!',
-                    vk
-                )
-                time.sleep(1.1)
-                select = '\'маффин\''
-                preparing_images_for_sending(
-                    select,
-                    vk,
-                    connection_bd,
-                    upload, event.user_id,
-                    'pay'
-                )
-            elif request == 'торты':
-                write_msg(
-                    event.user_id,
-                    'У нас их много, какой будешь? Cейчас все покажу!',
-                    vk
-                )
-                time.sleep(1.1)
-                select = '\'торт\''
-                preparing_images_for_sending(
-                    select,
-                    vk,
-                    connection_bd,
-                    upload,
-                    event.user_id,
-                    'pay'
-                )
-            elif request == 'пончики':
-                write_msg(
-                    event.user_id,
-                    'У нас их много, какой будешь? Cейчас все покажу!?',
-                    vk
-                 )
-                time.sleep(1.1)
-                select = '\'пончик\''
-                preparing_images_for_sending(
-                    select,
-                    vk,
-                    connection_bd,
-                    upload,
-                    event.user_id,
-                    'pay'
-                )
-            elif request == 'о нашей команде':
-                time.sleep(1.1)
-                select = '\'команда\''
-                preparing_images_for_sending(
-                    select,
-                    vk,
-                    connection_bd,
-                    upload,
-                    event.user_id,
-                    'team'
-                )
-            elif request == 'назад':
-                write_msg(
-                    event.user_id,
-                    'Чтобы вы хотели попробовать?',
-                    vk,
-                    keyboard='keyboard_for_shop'
-                )
-            elif request == 'оплатить':
-                write_msg(
-                    event.user_id,
-                    'к сожалению у нас пока нет аккаунта для платежей',
-                    vk
-                )
-            else:
-                write_msg(
-                    event.user_id,
-                    'Не поняла вашего ответа...',
-                    vk
-                )
+            try:
+                func = change_func.get(request).get('func')
+                if func == write_msg:
+                     message = change_func.get(request).get('message')
+                     attachment = change_func.get(request).get('attachment')
+                     keyboard = change_func.get(request).get('keyboard')
+                     func(user_id=event.user_id, message=message, attachment=attachment, keyboard=keyboard, vk=vk)
+                elif func == preparing_images_for_sending:
+                     category = change_func.get(request).get('category')
+                     key = change_func.get(request).get('key')
+                     if key == 'pay':
+                         write_msg(
+                             event.user_id,
+                             'У нас их много, какой будешь? Cейчас все покажу!?',
+                              vk
+                         )
+                     func(category=category, key=key, vk=vk, con=connection_bd, user_id=event.user_id, upload=upload)
+            except AttributeError:
+                 write_msg(
+                     event.user_id,
+                     'Не поняла вашего ответа...',
+                     vk
+                 ) 
