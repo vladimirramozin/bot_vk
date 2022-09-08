@@ -42,6 +42,12 @@ formatter = logging.Formatter(
     '%(asctime)s, %(filename)s, %(levelname)s, %(message)s'
 )
 handler.setFormatter(formatter)
+keyboard_arg = {
+    'keyboard_for_shop': keyboard_for_shop.get_keyboard(),
+    'team': keyboard_for_team.get_keyboard(),
+    'pay': keyboard_for_shop_pay.get_keyboard(),
+    'start': keyboard_for_main.get_keyboard()
+}
 
 
 def execute_read_query(connection_bd, query):
@@ -90,7 +96,7 @@ def preparing_images_for_sending(category, vk, con, upload, user_id, key=None):
             logger.info('файл картинки успешно прочитан')
     except FileNotFoundError:
         logger.error('файл не найден')
-keyboard_arg = {'keyboard_for_shop': keyboard_for_shop.get_keyboard(), 'team':keyboard_for_team.get_keyboard(), 'pay': keyboard_for_shop_pay.get_keyboard(), 'start': keyboard_for_main.get_keyboard()}
+
 
 def write_msg(user_id, message, vk, attachment=None, keyboard=None):
     """
@@ -102,9 +108,8 @@ def write_msg(user_id, message, vk, attachment=None, keyboard=None):
     для отправки в ВК изобржение,
     key, варианты клавиатур для ответов
     """
-
-    if not attachment is None:
-        attacchment = ','.join(attachment)
+    if attachment is not None:
+        attachment = ','.join(attachment)
     return vk.method(
         'messages.send', {
             'user_id': user_id,
@@ -114,4 +119,3 @@ def write_msg(user_id, message, vk, attachment=None, keyboard=None):
             'keyboard': keyboard_arg.get(keyboard, None)
             }
         )
-
